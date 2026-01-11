@@ -27,15 +27,15 @@ jobs:
       - name: Install Playwright Browsers
         run: playwright install
 
-      - name: Run tests with pytest + allure
-        run: pytest --alluredir=allure-results
-
       # - name: Run tests with pytest + allure
-      #   id: pytest
-      #   run: |
-      #     pytest \
-      #       --alluredir=allure-results \
-      #       --clean-alluredir || (echo "PYTEST_FAILED=true" >> $GITHUB_ENV)
+      #   run: pytest --alluredir=allure-results
+
+      - name: Run tests with pytest + allure
+        id: pytest
+        run: |
+          set +e
+          pytest --alluredir=allure-results --clean-alluredir
+          echo "exit_code=$?" >> $GITHUB_OUTPUT
 
       - name: Install Allure CLI
         run: npm install -g allure-commandline --save-dev
@@ -70,6 +70,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: allure-report
 
-      # - name: Fail pipeline if tests failed
-      #   if: steps.pytest.outputs.failed == 'true'
-      #   run: exit 1
+      - name: Fail job if tests failed
+        if: steps.pytest.outputs.exit_code != '0'
+        run: exit 1
