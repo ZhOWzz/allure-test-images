@@ -43,14 +43,15 @@ jobs:
 
       # Baixa o histórico do relatório anterior (se existir)
       - name: Download previous report
+        if: always()
         uses: actions/download-artifact@v4
         with:
           name: allure-report
           path: previous-report
-        continue-on-error: true
 
       # Copia a pasta history para os novos resultados
       - name: Copy history
+        if: always()
         run: |
           if [ -d previous-report/history ]; then
             cp -r previous-report/history allure-results/
