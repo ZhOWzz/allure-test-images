@@ -77,7 +77,7 @@ jobs:
         if: always()
         uses: peaceiris/actions-gh-pages@v4
         with:
-          personal_token: ${{ secrets.GH_PAGES_TOKEN }}
+          personal_token: ${{ secrets.GIT_TOKEN }}
           publish_dir: allure-report
           publish_branch: gh-pages
           enable_jekyll: false
