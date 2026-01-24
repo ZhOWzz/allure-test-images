@@ -48,7 +48,7 @@ def test_ct02_senha_invalida(page):
 def test_ct03_usuario_invalido(page):
     acessar_login(page)
     page.wait_for_timeout(4500)
-    preencher_login(page, "", VALID_PASS)
+    preencher_login(page, "iNVALID", VALID_PASS)
     page.wait_for_timeout(4500)
 
     visible = page.locator("text=Invalid credentials").is_visible()
@@ -96,7 +96,7 @@ def test_ct05_usuario_vazio(page):
 def test_ct06_senha_vazia(page):
     acessar_login(page)
     page.wait_for_timeout(4500)
-    preencher_login(page, VALID_USER, "trollpass")
+    preencher_login(page, VALID_USER, "")
     page.wait_for_timeout(4500)
 
     visible = page.locator("text=Required").is_visible()
